@@ -133,8 +133,8 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        for i in range(0, self.row_length, self.box_length):
-            self.fill_box(i, i)
+        for cell in range(0, self.row_length, self.box_length):
+            self.fill_box(cell, cell)
 
     '''
     DO NOT CHANGE
@@ -200,13 +200,13 @@ class SudokuGenerator:
 	Return: None
     '''
     def remove_cells(self):
-        count = self.removed_cells
-        while count > 0:
+        cells_remove = self.removed_cells
+        while cells_remove > 0:
             row = random.randint(0, self.row_length - 1)
             col = random.randint(0, self.row_length - 1)
             if self.board[row][col] != 0:
                 self.board[row][col] = 0
-                count -= 1
+                cells_remove -= 1
 
 '''
 DO NOT CHANGE
