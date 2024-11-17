@@ -103,10 +103,17 @@ class SudokuGenerator:
 
 	Return: boolean
     '''
+
     def is_valid(self, row, col, num):
-        return (self.valid_in_row(row, num) and
-                self.valid_in_col(col, num) and
-                self.valid_in_box(row - row % self.box_length, col - col % self.box_length, num))
+        if not self.valid_in_row(row, num):
+            return False
+        if not self.valid_in_col(col, num):
+            return False
+        start_row = row - row % self.box_length
+        start_col = col - col % self.box_length
+        if not self.valid_in_box(start_row, start_col, num):
+            return False
+        return True
 
 
     '''
@@ -119,8 +126,14 @@ class SudokuGenerator:
 
 	Return: None
     '''
+
     def fill_box(self, row_start, col_start):
-        nums = random.sample(range(1, self.row_length + 1), self.row_length)
+        nums = list(range(1, self.row_length + 1))
+        sampled = []
+        while nums:
+            num = random.choice(nums)
+            sampled.append(num)
+            nums.remove(num)
         for i in range(self.box_length):
             for j in range(self.box_length):
                 self.board[row_start + i][col_start + j] = nums.pop()
